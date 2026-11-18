@@ -61,7 +61,7 @@ export default function Loign() {
         <h1 className="text-3xl font-semibold">Registration</h1>
         <form action="#" className="w-full flex flex-col gap-3">
           <div className="w-full flex flex-col justify-center">
-            <label htmlFor="email" className="text-sm mb-1">
+            <label htmlFor="name" className="text-sm mb-1">
               Name
             </label>
             <input
@@ -91,7 +91,7 @@ export default function Loign() {
             />
           </div>
           <button className="bg-blue-500 text-white h-10 rounded-sm mt-5  hover:bg-blue-700 cursor-pointer transition-colors duration-300">
-            Login
+            Registor
           </button>
 
           <p className="mt-5 mb-2 text-center">
