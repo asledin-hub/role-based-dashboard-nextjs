@@ -1,11 +1,8 @@
-type User_login = {
+export type Registor = {
+  id: number;
+  fullName: string;
   email: string;
   password: string;
-};
-
-type User_registor = {
-  id: number;
-  name: string;
-  password: string;
-  confirm_pass: string;
+  confirm_password: string;
+  role: string;
 };
