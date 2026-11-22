@@ -1,9 +1,9 @@
-import Registor from "@/components/Registor";
+import Register from "@/components/Register";
 
 const registration = () => {
   return (
     <div>
-      <Registor />
+      <Register />
     </div>
   );
 };
