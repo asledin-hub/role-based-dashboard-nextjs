@@ -18,15 +18,19 @@ const notifications = {
   },
   error: {
     message: "User already exists",
-    bg: "bg-red-500/20 text-red-600",
+    bg: "bg-red-500/20 text-red-600 border border-red-600",
+  },
+  errorNetwork: {
+    message: "Please check your connection",
+    bg: "bg-red-500/20 text-red-600 border border-red-600",
   },
   errorPassword: {
     message: "Passwords do not match",
-    bg: "bg-red-500/20 text-red-600",
+    bg: "bg-red-500/20 text-red-700 border border-red-600 ",
   },
   warning: {
     message: "Please fill in all fields",
-    bg: "bg-yellow-500/20 text-yellow-600",
+    bg: "bg-yellow-500/20 text-yellow-700 border border-yellow-600",
   },
 };
 
@@ -35,6 +39,7 @@ export default function Register() {
   const [formData, setFormData] = useState(registerData);
   const [notification, setNotification] = useState(notifications.warning);
   const [showNotification, setShowNotification] = useState<boolean>(false);
+  const [loding, setLoding] = useState(false);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
@@ -89,14 +94,18 @@ export default function Register() {
       setShowNotification(true);
       return;
     }
-
+    setLoding(true);
     try {
       const response = await fetch("/api/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          fullName: formData.fullName,
+          email: formData.email,
+          password: formData.password,
+        }),
       });
 
       if (!response.ok) {
@@ -188,9 +197,10 @@ export default function Register() {
 
           <button
             type="submit"
-            className="bg-blue-500 text-white h-10 rounded-sm mt-5  hover:bg-blue-700 cursor-pointer transition-colors duration-300 flex items-center justify-center"
+            className="bg-blue-500 text-white h-10 rounded-sm mt-5 hover:bg-blue-700 disabled:bg-gray-300 disabled:text-gray-700 disabled:cursor-not-allowed cursor-pointer transition-colors duration-300 flex items-center justify-center"
+            disabled={loding}
           >
-            Register
+            {loding ? "Registering...." : "Register"}
           </button>
 
           <p className="mt-5 mb-2 text-center">
