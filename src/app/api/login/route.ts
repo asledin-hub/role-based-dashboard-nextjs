@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json(
-      { message: "Login successfully" },
+      { message: "Login successfully", role: existingUser.role },
       { status: 200 },
     );
   } catch (error) {
@@ -42,4 +42,11 @@ export async function POST(request: NextRequest) {
       { status: 500 },
     );
   }
+}
+
+export async function GET() {
+  await connectToDatabase();
+  const allUsers = await User.find();
+  console.log("GET request received:", allUsers);
+  return NextResponse.json(allUsers);
 }

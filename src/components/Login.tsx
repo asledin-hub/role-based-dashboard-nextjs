@@ -15,8 +15,12 @@ const notifications = {
     bg: "bg-green-500/20 text-green-600",
   },
   error: {
-    message: "User already exists",
+    message: "Invalid email or password",
     bg: "bg-red-500/20 text-red-600",
+  },
+  errorNetwork: {
+    message: "Please check your connection",
+    bg: "bg-red-500/20 text-red-600 border border-red-600",
   },
 
   warning: {
@@ -50,7 +54,7 @@ export default function Register() {
     }
     setLoding(true);
     try {
-      const response = await fetch("/api/register", {
+      const response = await fetch("/api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -66,15 +70,19 @@ export default function Register() {
         setShowNotification(true);
         return;
       }
+      const data = await response.json();
 
       setFormData(registerData);
-      setNotification(notifications.success);
       setShowNotification(true);
+      setLoding(false);
 
-      setTimeout(() => {
-        setShowNotification(false);
-        router.push("/register");
-      }, 2000);
+      if (data.role === "admin") {
+        router.push("/admin");
+      } else if (data.role === "teacher") {
+        router.push("/teacher");
+      } else {
+        router.push("/student");
+      }
     } catch {
       setNotification(notifications.error);
       setShowNotification(true);
